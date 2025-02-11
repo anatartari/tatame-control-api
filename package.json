@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
