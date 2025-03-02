@@ -19,14 +19,18 @@ public class SportEntity {
     private String name;
 
     @Column(nullable = false)
-    private String frequency;
-
-    @Column(nullable = false)
-    private Time time;
-
-    @Column(nullable = false)
     private String sensei;
 
     @Column(nullable = false)
     private Double price;
+
+    @Column(name = "day_of_week", nullable = false)
+    private String dayOfWeek;
+
+    @Column(name = "start_time", nullable = false)
+    private Time startTime;
+
+    @Column(name = "end_time", nullable = false)
+    private Time endTime;
+
 }

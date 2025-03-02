@@ -14,12 +14,9 @@ import java.sql.Time;
 public class Sport {
     private Long id;
     private String name;
-
-    private String frequency;
-
-    private Time time;
-
     private String sensei;
-
     private Double price;
+    private String dayOfWeek;
+    private Time startTime;
+    private Time endTime;
 }

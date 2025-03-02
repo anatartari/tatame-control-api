@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface ExperimentalClassControllerMapper {
 
-    public ExperimentalClassControllerMapper INSTANCE = Mappers.getMapper(ExperimentalClassControllerMapper.class);
+    ExperimentalClassControllerMapper INSTANCE = Mappers.getMapper(ExperimentalClassControllerMapper.class);
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "studentId", source = "student.id")
