@@ -11,19 +11,16 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SportEntityMapper {
 
     SportEntityMapper INSTANCE = Mappers.getMapper(SportEntityMapper.class);
 
-
-    @Mapping(target = "dayOfWeek", expression = "java(mapDayOfWeekEnumToString(sport.getDayOfWeek()))")
     SportEntity toSportEntity(Sport sport);
 
-    @Mapping(target = "dayOfWeek", expression = "java(mapDayOfWeekEnumToString(sport.getDayOfWeek()))")
+    @Mapping(target = "dayOfWeek", expression = "java(mapDayOfWeekEnumToString(sport.dayOfWeek()))")
     SportEntity toSportEntity(CreateSportDTO sport);
 
-    @Mapping(target = "dayOfWeek", expression = "java(mapStringToDayOfWeekEnum(sportEntity.getDayOfWeek()))")
     Sport toSport(SportEntity sportEntity);
 
     default String mapDayOfWeekEnumToString(List<DayOfWeekEnum> dayOfWeekEnums) {
@@ -32,9 +29,4 @@ public interface SportEntityMapper {
                 .collect(Collectors.joining(","));
     }
 
-    default List<DayOfWeekEnum> mapStringToDayOfWeekEnum(String dayOfWeek) {
-        return List.of(dayOfWeek.split(",")).stream()
-                .map(DayOfWeekEnum::valueOf)
-                .collect(Collectors.toList());
-    }
 }

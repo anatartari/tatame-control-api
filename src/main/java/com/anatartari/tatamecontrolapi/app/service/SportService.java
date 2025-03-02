@@ -1,15 +1,12 @@
 package com.anatartari.tatamecontrolapi.app.service;
 
-import com.anatartari.tatamecontrolapi.app.exception.SportExistByFrequencyException;
+import com.anatartari.tatamecontrolapi.app.exception.CreateSportException;
 import com.anatartari.tatamecontrolapi.core.dto.CreateSportDTO;
-import com.anatartari.tatamecontrolapi.core.model.DayOfWeekEnum;
 import com.anatartari.tatamecontrolapi.core.model.Sport;
 import com.anatartari.tatamecontrolapi.core.persistence.ISportRepository;
 import com.anatartari.tatamecontrolapi.core.usecases.SportUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 @Service
 public class SportService implements SportUseCase {
@@ -23,16 +20,12 @@ public class SportService implements SportUseCase {
     @Override
     public Sport create(CreateSportDTO request) {
 
-        validateRequest(request);
+        try {
+            return sportRepository.save(request);
 
-        return sportRepository.save(request);
-    }
-
-    private void validateRequest(CreateSportDTO request) {
-
-        if(sportRepository.existsByFrequency(request.dayOfWeek().stream()
-                .map(DayOfWeekEnum::getValue).collect(Collectors.toList()), request.startTime(), request.endTime())) {
-            throw new SportExistByFrequencyException();
+        }catch (Exception e){
+            throw new CreateSportException(e.getMessage());
         }
     }
+
 }

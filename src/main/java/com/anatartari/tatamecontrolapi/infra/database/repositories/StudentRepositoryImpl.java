@@ -9,11 +9,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class StudentRepositoryImpl implements IStudentRepository {
 
-    JpaStudentEntityRepository studentEntityRepository;
+    private final JpaStudentEntityRepository studentEntityRepository;
+
+    private final StudentEntityMapper studentEntityMapper;
+
+    public StudentRepositoryImpl(JpaStudentEntityRepository studentEntityRepository, StudentEntityMapper studentEntityMapper) {
+        this.studentEntityRepository = studentEntityRepository;
+        this.studentEntityMapper = studentEntityMapper;
+    }
 
     @Override
     public Student create(Student student) {
-        return StudentEntityMapper.INSTANCE.toStudent(
-                studentEntityRepository.save(StudentEntityMapper.INSTANCE.toEntity(student)));
+        return studentEntityMapper.toStudent(
+                studentEntityRepository.save(studentEntityMapper.toEntity(student)));
     }
 }

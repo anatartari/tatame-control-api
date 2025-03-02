@@ -1,6 +1,7 @@
 package com.anatartari.tatamecontrolapi.app.service;
 
-import com.anatartari.tatamecontrolapi.app.exception.ExperimentalistExistException;
+import com.anatartari.tatamecontrolapi.app.exception.CreateExperimentalClassException;
+import com.anatartari.tatamecontrolapi.app.exception.ExperimentalClassExistException;
 import com.anatartari.tatamecontrolapi.app.exception.ResurceNotFoundException;
 import com.anatartari.tatamecontrolapi.app.mapper.StudentMapper;
 import com.anatartari.tatamecontrolapi.core.dto.CreateExperimentalClassDTO;
@@ -22,10 +23,13 @@ public class ExperimentalClassService implements ExperimentalClassUseCase {
 
     private final IStudentRepository studentRepository;
 
-    public ExperimentalClassService(ISportRepository sportRepository, IExperimentalClassRepository experimentalClassRepository, IStudentRepository studentRepository) {
+    private final StudentMapper studentMapper;
+
+    public ExperimentalClassService(ISportRepository sportRepository, IExperimentalClassRepository experimentalClassRepository, IStudentRepository studentRepository, StudentMapper studentMapper) {
         this.sportRepository = sportRepository;
         this.experimentalClassRepository = experimentalClassRepository;
         this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
     }
 
 
@@ -35,17 +39,22 @@ public class ExperimentalClassService implements ExperimentalClassUseCase {
                 .orElseThrow(() -> new ResurceNotFoundException(Sport.class.getName(), request.sportId()));
 
         if(experimentalClassRepository.existsByStudentEmailAndSportId(request.email(), request.sportId())){
-            throw new ExperimentalistExistException(request.email(), request.sportId());
+            throw new ExperimentalClassExistException(request.email(), request.sportId());
         }
 
-        Student student = studentRepository.create(StudentMapper.INSTANCE.createExperimentalToStudent(request));
+        try {
+            Student student = studentRepository.create(studentMapper.createExperimentalToStudent(request));
 
-        ExperimentalClass experimentalClass = ExperimentalClass.builder()
-                .sport(sport)
-                .student(student)
-                .build();
+            ExperimentalClass experimentalClass = ExperimentalClass.builder()
+                    .sport(sport)
+                    .student(student)
+                    .build();
 
-        return experimentalClassRepository.create(experimentalClass);
+            return experimentalClassRepository.create(experimentalClass);
+
+        }catch (Exception e){
+            throw new CreateExperimentalClassException(e.getMessage());
+        }
 
     }
 

@@ -4,11 +4,9 @@ import com.anatartari.tatamecontrolapi.core.model.Sport;
 import com.anatartari.tatamecontrolapi.infra.controller.responses.CreateSportResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SportControllerMapper {
-    SportControllerMapper INSTANCE = Mappers.getMapper(SportControllerMapper.class);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")

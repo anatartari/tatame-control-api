@@ -4,12 +4,9 @@ import com.anatartari.tatamecontrolapi.core.dto.CreateExperimentalClassDTO;
 import com.anatartari.tatamecontrolapi.core.model.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StudentMapper {
-
-    StudentMapper INSTANCE = Mappers.getMapper(StudentMapper.class);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "allowSocialMedia", constant = "false")
