@@ -8,7 +8,6 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @Builder
-@Data
 public class Student {
     private Long id;
     private String name;

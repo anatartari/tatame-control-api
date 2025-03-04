@@ -43,7 +43,7 @@ public class ExperimentalClassService implements ExperimentalClassUseCase {
         }
 
         try {
-            Student student = studentRepository.create(studentMapper.createExperimentalToStudent(request));
+            Student student = studentRepository.save(studentMapper.createExperimentalToStudent(request));
 
             ExperimentalClass experimentalClass = ExperimentalClass.builder()
                     .sport(sport)

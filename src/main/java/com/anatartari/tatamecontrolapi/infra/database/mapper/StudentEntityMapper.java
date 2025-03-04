@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface StudentEntityMapper {
+
     StudentEntity toEntity(Student student);
 
     Student toStudent(StudentEntity studentEntity);

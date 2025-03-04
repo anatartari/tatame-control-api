@@ -7,6 +7,7 @@ import com.anatartari.tatamecontrolapi.infra.controller.mapper.RegistrationContr
 import com.anatartari.tatamecontrolapi.infra.controller.responses.RegistrationResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class RegistrationController {
         this.registrationUseCase = registrationUseCase;
     }
 
+    @PostMapping("/create")
     public ResponseEntity<RegistrationResponse> create(@RequestBody @Valid CreateRegistrationDTO request){
         Registration response = registrationUseCase.create(request);
         return ResponseEntity.ok(registrationControllerMapper.toResponse(response));

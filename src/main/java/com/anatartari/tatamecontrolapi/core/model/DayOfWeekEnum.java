@@ -1,5 +1,6 @@
 package com.anatartari.tatamecontrolapi.core.model;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,13 @@ public enum DayOfWeekEnum {
                 .sorted(Comparator.comparingInt(day -> day.order))
                 .map(DayOfWeekEnum::getValue)
                 .collect(Collectors.joining(","));
+    }
+
+    public static List<DayOfWeekEnum> getEnumListFromString(String enumString) {
+        return Arrays.stream(enumString.split(","))
+                .map(DayOfWeekEnum::valueOf)
+                .sorted(Comparator.comparingInt(day -> day.order))
+                .toList();
     }
 
     public String getValue() {

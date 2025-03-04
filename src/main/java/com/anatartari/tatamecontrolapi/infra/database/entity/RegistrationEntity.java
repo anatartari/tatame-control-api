@@ -1,5 +1,6 @@
 package com.anatartari.tatamecontrolapi.infra.database.entity;
 
+import com.anatartari.tatamecontrolapi.core.model.StatusRegistrationEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,12 +17,13 @@ public class RegistrationEntity {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
-    private StudentEntity studentEntity;
+    private StudentEntity student;
 
     @ManyToOne
     @JoinColumn(name = "sport_id", nullable = false)
-    private SportEntity sportEntity;
+    private SportEntity sport;
 
     @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusRegistrationEnum status;
 }

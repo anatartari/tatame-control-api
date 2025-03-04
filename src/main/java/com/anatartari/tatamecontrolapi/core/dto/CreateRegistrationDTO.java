@@ -7,6 +7,7 @@ public record CreateRegistrationDTO(
 
         @Valid @NotNull(message = "Student information is mandatory")
         StudentRegistrationDTO student,
+
         @NotNull(message = "Sport ID is mandatory")
         Long sportId,
 

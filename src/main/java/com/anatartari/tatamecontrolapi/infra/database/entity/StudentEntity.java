@@ -44,5 +44,5 @@ public class StudentEntity {
 
     @OneToOne
     @JoinColumn(name = "medical_info_id", referencedColumnName = "id")
-    private MedicalInfoEntity medicalInfoEntity;
+    private MedicalInfoEntity medicalInfo;
 }
