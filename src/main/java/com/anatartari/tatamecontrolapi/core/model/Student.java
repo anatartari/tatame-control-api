@@ -21,5 +21,5 @@ public class Student {
     private Boolean practicedMartialArts;
     private String graduatedInStyle;
     private Address address;
-    private MedicalInfo medicalInfoEntity;
+    private MedicalInfo medicalInfo;
 }

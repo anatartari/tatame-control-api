@@ -12,6 +12,6 @@ public interface StudentMapper {
     @Mapping(target = "allowSocialMedia", constant = "false")
     @Mapping(target = "instagram", ignore = true)
     @Mapping(target = "address", ignore = true)
-    @Mapping(target = "medicalInfoEntity", ignore = true)
+    @Mapping(target = "medicalInfo", ignore = true)
     Student createExperimentalToStudent(CreateExperimentalClassDTO dto);
 }

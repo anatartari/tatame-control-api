@@ -2,12 +2,15 @@ CREATE DATABASE "tatame-control-db";
 
 -- Tabela Address
 CREATE TABLE address (
- id SERIAL PRIMARY KEY,
- street VARCHAR(255) not null,
- neighborhood VARCHAR(255) not null,
- cep VARCHAR(20) not null,
- city VARCHAR(100),
- state VARCHAR(50)
+     id SERIAL PRIMARY KEY,
+     street VARCHAR(255) not null,
+     neighborhood VARCHAR(255) not null,
+     cep VARCHAR(20) not null,
+     city VARCHAR(100),
+     state VARCHAR(50),
+     number VARCHAR(20),
+     complement VARCHAR(100)
+
 );
 
 -- Tabela medical_info

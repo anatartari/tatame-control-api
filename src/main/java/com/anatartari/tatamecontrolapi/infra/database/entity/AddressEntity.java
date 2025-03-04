@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Struct;
+
 @Getter
 @Setter
 @Entity
@@ -24,4 +26,6 @@ public class AddressEntity {
 
     private String city;
     private String state;
+    private String number;
+    private String complement;
 }

@@ -13,4 +13,6 @@ public class Address {
     String cep;
     String city;
     String state;
+    String number;
+    String complement;
 }

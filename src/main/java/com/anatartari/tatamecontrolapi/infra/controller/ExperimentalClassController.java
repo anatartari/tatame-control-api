@@ -4,6 +4,7 @@ import com.anatartari.tatamecontrolapi.core.dto.CreateExperimentalClassDTO;
 import com.anatartari.tatamecontrolapi.core.usecases.ExperimentalClassUseCase;
 import com.anatartari.tatamecontrolapi.infra.controller.mapper.ExperimentalClassControllerMapper;
 import com.anatartari.tatamecontrolapi.infra.controller.responses.CreateExperimentalClassResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class ExperimentalClassController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CreateExperimentalClassResponse> create(@RequestBody CreateExperimentalClassDTO createExperimentalClassDTO) {
+    public ResponseEntity<CreateExperimentalClassResponse> create(@RequestBody @Valid CreateExperimentalClassDTO createExperimentalClassDTO) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ExperimentalClassControllerMapper.INSTANCE
                         .createExperimentalClassResponse(experimentalClassUseCase.create(createExperimentalClassDTO)));
