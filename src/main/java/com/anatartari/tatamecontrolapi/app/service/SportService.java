@@ -2,11 +2,14 @@ package com.anatartari.tatamecontrolapi.app.service;
 
 import com.anatartari.tatamecontrolapi.app.exception.CreateSportException;
 import com.anatartari.tatamecontrolapi.core.dto.CreateSportDTO;
+import com.anatartari.tatamecontrolapi.core.dto.SportListDTO;
 import com.anatartari.tatamecontrolapi.core.model.Sport;
 import com.anatartari.tatamecontrolapi.core.persistence.ISportRepository;
 import com.anatartari.tatamecontrolapi.core.usecases.SportUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SportService implements SportUseCase {
@@ -26,6 +29,11 @@ public class SportService implements SportUseCase {
         }catch (Exception e){
             throw new CreateSportException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<SportListDTO> list() {
+        return sportRepository.list();
     }
 
 }

@@ -15,9 +15,12 @@ public class ExperimentalClassRepositoryImpl implements IExperimentalClassReposi
 
     private final StudentEntityMapper studentEntityMapper;
 
-    public ExperimentalClassRepositoryImpl(JpaExperimentalClassRepository experimentalClassRepository, StudentEntityMapper studentEntityMapper) {
+    private final SportEntityMapper sportEntityMapper;
+
+    public ExperimentalClassRepositoryImpl(JpaExperimentalClassRepository experimentalClassRepository, StudentEntityMapper studentEntityMapper, SportEntityMapper sportEntityMapper) {
         this.experimentalClassRepository = experimentalClassRepository;
         this.studentEntityMapper = studentEntityMapper;
+        this.sportEntityMapper = sportEntityMapper;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class ExperimentalClassRepositoryImpl implements IExperimentalClassReposi
     @Override
     public ExperimentalClass create(ExperimentalClass experimentalClass) {
         ExperimentalClassEntity entity = experimentalClassRepository.save(ExperimentalClassEntity.builder()
-                .sportEntity(SportEntityMapper.INSTANCE.toSportEntity(experimentalClass.getSport()))
+                .sportEntity(sportEntityMapper.toSportEntity(experimentalClass.getSport()))
                 .studentEntity(studentEntityMapper.toEntity(experimentalClass.getStudent()))
                 .build());
 
