@@ -38,11 +38,11 @@ public class StudentEntity {
 
     private String graduatedInStyle;
 
-    @OneToOne
+    @OneToOne(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressEntity address;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "medical_info_id", referencedColumnName = "id")
     private MedicalInfoEntity medicalInfo;
 }

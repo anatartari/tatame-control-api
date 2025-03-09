@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,4 +28,11 @@ public class RegistrationEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusRegistrationEnum status;
+
+    @ManyToMany
+    @JoinTable(name = "registration_payment",
+            joinColumns = @JoinColumn(name = "registration_id"),
+            inverseJoinColumns = @JoinColumn(name = "payment_id"))
+    private List<PaymentEntity> payments = new ArrayList<>();
+
 }

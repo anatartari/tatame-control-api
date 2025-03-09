@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +22,8 @@ public class PaymentEntity {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    @ManyToMany(mappedBy = "payments")
+    private List<RegistrationEntity> registrations = new ArrayList<>();
+
 }
