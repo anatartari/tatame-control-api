@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ExperimentalClass } from "src/experimental-class/entities/experimental-class.entity";
+import { Registration } from "src/registration/entities/registration.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Sport {
@@ -14,12 +16,18 @@ export class Sport {
     @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
     price: number;
 
-    @Column({ length: 50, nullable: false })
-    day_of_week: string;
+    @Column({ name: "day_of_week", length: 50, nullable: false })
+    dayOfWeek: string;
 
-    @Column({ type: 'time', nullable: false })
-    start_time: string;
+    @Column({ name: "start_time", type: 'time', nullable: false })
+    startTime: string;
 
-    @Column({ type: 'time', nullable: false })
-    end_time: string;
+    @Column({ name: "end_time", type: 'time', nullable: false })
+    endTime: string;
+
+    @OneToMany(() => ExperimentalClass, (expClass) => expClass.sport)
+    experimentalClasses: ExperimentalClass[];
+
+    @OneToMany(() => Registration, registration => registration.sport)
+    registrations: Registration[];
 }

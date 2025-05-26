@@ -3,6 +3,7 @@ import { SportService } from './sport.service';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { Sport } from './entities/sport.entity';
+import { SportWithStudentsCountDto } from './dto/sport-with-students-count.dto';
 
 @Controller('sport')
 export class SportController {
@@ -11,6 +12,11 @@ export class SportController {
   @Post()
   create(@Body() createSportDto: CreateSportDto): Promise<Sport> {
     return this.sportService.create(createSportDto);
+  }
+
+  @Get('with-students-count')
+  findAllWithStudentsCount(): Promise<SportWithStudentsCountDto[]> {
+    return this.sportService.findAllWithStudentsCount();
   }
 
   @Get()

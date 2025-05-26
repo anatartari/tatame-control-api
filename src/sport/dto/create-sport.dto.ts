@@ -17,13 +17,13 @@ export class CreateSportDto {
 
     @MaxLength(5)
     @IsNotEmpty()
-    day_of_week: DayOfWeekEnum[];
+    dayOfWeek: DayOfWeekEnum[];
 
     @IsString()
     @IsNotEmpty()
-    start_time: string;
+    startTime: string;
 
     @IsString()
     @IsNotEmpty()
-    end_time: string;
+    endTime: string;
 }
