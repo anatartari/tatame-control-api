@@ -30,12 +30,11 @@ export class SportService {
     return this.sportRepository.find();
   }
 
-  //TODO: CREATE EXCEPTION HANDLER
-  async findOne(id: number): Promise<Sport | null> {
+  async findOne(id: string): Promise<Sport | null> {
     return this.sportRepository.findOne({ where: { id } });
   }
 
-  async update(id: number, updateSportDto: UpdateSportDto): Promise<Sport> {
+  async update(id: string, updateSportDto: UpdateSportDto): Promise<Sport> {
     const updateData = {
       ...updateSportDto,
       dayOfWeek: Array.isArray(updateSportDto.dayOfWeek)
@@ -46,7 +45,7 @@ export class SportService {
     return this.sportRepository.findOne({ where: { id } }) as Promise<Sport>;
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.sportRepository.delete(id);
   }
 }

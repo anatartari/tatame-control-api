@@ -1,12 +1,10 @@
 import { ExperimentalClass } from "src/experimental-class/entities/experimental-class.entity";
 import { Registration } from "src/registration/entities/registration.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
+import { BaseEntity } from "../../global/entities/base.entity";
 
 @Entity()
-export class Sport {
-    @PrimaryGeneratedColumn()
-    id: number;
-
+export class Sport extends BaseEntity {
     @Column({ length: 50, nullable: false })
     name: string;
 

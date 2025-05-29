@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsNumber, MaxLength, Min } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber, MaxLength, Min, IsArray } from 'class-validator';
 import { DayOfWeekEnum } from 'src/global/enums/dayOfWeek.enum';
 
 export class CreateSportDto {
@@ -15,7 +15,7 @@ export class CreateSportDto {
     @IsNotEmpty()
     price: number;
 
-    @MaxLength(5)
+    @IsArray()
     @IsNotEmpty()
     dayOfWeek: DayOfWeekEnum[];
 

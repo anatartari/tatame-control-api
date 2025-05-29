@@ -1,20 +1,19 @@
 // src/student/student.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Address } from '../../address/entities/address.entity';
 import { MedicalInfo } from '../../medical-info/entities/medical-info.entity';
+import { BaseEntity } from '../../global/entities/base.entity';
 
 @Entity()
-export class Student {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class Student extends BaseEntity {
 
-    @Column({ length: 255 })
+    @Column({ length: 255, unique: true })
     name: string;
 
     @Column({ length: 255, unique: true })
     email: string;
 
-    @Column({ length: 20 })
+    @Column({ length: 20, unique: true })
     phone: string;
 
     @Column({ length: 50, nullable: true })

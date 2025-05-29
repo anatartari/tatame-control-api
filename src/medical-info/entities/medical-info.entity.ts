@@ -1,10 +1,9 @@
 // src/medical-info/entities/medical-info.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { BaseEntity } from '../../global/entities/base.entity';
 
 @Entity('medical_info')
-export class MedicalInfo {
-    @PrimaryGeneratedColumn()
-    id: number;
+export class MedicalInfo extends BaseEntity {
 
     @Column({ name: 'pre_existing_condition', length: 10 })
     preExistingCondition: string;

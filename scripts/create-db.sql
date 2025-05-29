@@ -1,6 +1,9 @@
+-- Enable UUID extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Tabela Address
 CREATE TABLE address (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     street VARCHAR(255) not null,
     neighborhood VARCHAR(255) not null,
     cep VARCHAR(20) not null,
@@ -11,7 +14,7 @@ CREATE TABLE address (
 );
 
 CREATE TABLE medical_info (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     pre_existing_condition VARCHAR(10) NOT NULL,
     pre_existing_condition_details TEXT,
     serious_injury VARCHAR(10) NOT NULL,
@@ -49,7 +52,7 @@ CREATE TABLE medical_info (
 
 -- Tabela Student
 CREATE TABLE student (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     phone VARCHAR(20) NOT NULL,
@@ -59,13 +62,13 @@ CREATE TABLE student (
     instagram VARCHAR(255),
     practiced_martial_arts BOOLEAN,
     graduated_in_style VARCHAR(255),
-    address_id INT REFERENCES address (id) ON DELETE SET NULL,
-    medical_info_id INT REFERENCES medical_info (id) ON DELETE SET NULL
+    address_id UUID REFERENCES address (id) ON DELETE SET NULL,
+    medical_info_id UUID REFERENCES medical_info (id) ON DELETE SET NULL
 );
 
 -- Tabela Sport
 CREATE TABLE sport (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50) NOT NULL,
     sensei VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
@@ -76,52 +79,52 @@ CREATE TABLE sport (
 
 -- Tabela Experimental Class
 CREATE TABLE experimental_class (
-    id SERIAL PRIMARY KEY,
-    sport_id INT REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
-    student_id INT REFERENCES student (id) ON DELETE CASCADE NOT NULL
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    sport_id UUID REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
+    student_id UUID REFERENCES student (id) ON DELETE CASCADE NOT NULL
 );
 
 -- Tabela Registration
 CREATE TABLE registration (
-    id SERIAL PRIMARY KEY,
-    student_id INT REFERENCES student (id) ON DELETE CASCADE NOT NULL,
-    sport_id INT REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    student_id UUID REFERENCES student (id) ON DELETE CASCADE NOT NULL,
+    sport_id UUID REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
     status VARCHAR(50) NOT NULL,
     CONSTRAINT unique_student_sport UNIQUE (student_id, sport_id)
 );
 
 -- Tabela Payment
 CREATE TABLE payment (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     value DECIMAL(10, 2) NOT NULL,
     date DATE NOT NULL
 );
 
 -- Tabela Registration Payment (Relacionamento entre registration e payment)
 CREATE TABLE registration_payment (
-    id SERIAL PRIMARY KEY,
-    registration_id INT REFERENCES registration (id) ON DELETE CASCADE NOT NULL,
-    payment_id INT REFERENCES payment (id) ON DELETE CASCADE NOT NULL,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    registration_id UUID REFERENCES registration (id) ON DELETE CASCADE NOT NULL,
+    payment_id UUID REFERENCES payment (id) ON DELETE CASCADE NOT NULL,
     CONSTRAINT unique_registration_payment UNIQUE (registration_id, payment_id)
 );
 
 -- Tabela Message
 CREATE TABLE message (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     template TEXT NOT NULL
 );
 
 -- Tabela Security
 CREATE TABLE security (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     value TEXT NOT NULL
 );
 
 -- Tabela Configuration
 CREATE TABLE configuration (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     value TEXT NOT NULL
 );
