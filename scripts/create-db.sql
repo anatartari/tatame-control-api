@@ -97,12 +97,12 @@ CREATE TABLE registration (
 CREATE TABLE payment (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     value DECIMAL(10, 2) NOT NULL,
-    date DATE NOT NULL
+    date DATE NOT NULL,
+    reference_month INTEGER NOT NULL
 );
 
 -- Tabela Registration Payment (Relacionamento entre registration e payment)
 CREATE TABLE registration_payment (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     registration_id UUID REFERENCES registration (id) ON DELETE CASCADE NOT NULL,
     payment_id UUID REFERENCES payment (id) ON DELETE CASCADE NOT NULL,
     CONSTRAINT unique_registration_payment UNIQUE (registration_id, payment_id)

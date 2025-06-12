@@ -3,7 +3,7 @@ import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sport } from './entities/sport.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { daysOfWeekArrayToString } from 'src/global/enums/dayOfWeek.enum';
 import { SportRepository } from './sport.repository';
 import { SportWithStudentsCountDto } from './dto/sport-with-students-count.dto';
@@ -47,5 +47,14 @@ export class SportService {
 
   async remove(id: string): Promise<void> {
     await this.sportRepository.delete(id);
+  }
+
+  async calculateTotalPrice(sportIds: string[]): Promise<number> {
+    const sports = await this.sportRepository.find({
+      where: { id: In(sportIds) },
+      select: ['price']
+    });
+
+    return sports.reduce((total, sport) => total + Number(sport.price), 0);
   }
 }

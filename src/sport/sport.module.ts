@@ -8,7 +8,7 @@ import { DataSource } from 'typeorm';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Sport])],
-  exports: [SportRepository],
+  exports: [SportRepository, SportService],
   controllers: [SportController],
   providers: [SportService,
     {

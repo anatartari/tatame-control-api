@@ -16,7 +16,7 @@ export class Registration extends BaseEntity {
     @Column({ length: 50 })
     status: string;
 
-    @ManyToMany(() => Payment)
+    @ManyToMany(() => Payment, (payment) => payment.registrations)
     @JoinTable()
     payments: Payment[]
 }
