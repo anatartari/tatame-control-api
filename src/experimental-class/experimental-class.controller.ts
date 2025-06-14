@@ -8,7 +8,7 @@ export class ExperimentalClassController {
     constructor(private readonly experimentalClassService: ExperimentalClassService) {}
 
     @Post()
-    async create(@Body() createDto: CreateExperimentalClassDto): Promise<ExperimentalClass> {
+    async create(@Body() createDto: CreateExperimentalClassDto): Promise<ExperimentalClass[]> {
         return this.experimentalClassService.save(createDto);
     }
 }

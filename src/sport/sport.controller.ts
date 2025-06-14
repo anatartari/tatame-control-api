@@ -4,6 +4,7 @@ import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
 import { Sport } from './entities/sport.entity';
 import { SportWithStudentsCountDto } from './dto/sport-with-students-count.dto';
+import { BasicListSportDto } from './dto/basic-list-sport.dto';
 
 @Controller('sport')
 export class SportController {
@@ -17,6 +18,11 @@ export class SportController {
   @Get('with-students-count')
   findAllWithStudentsCount(): Promise<SportWithStudentsCountDto[]> {
     return this.sportService.findAllWithStudentsCount();
+  }
+
+  @Get('basic-list')
+  listBasicList() : Promise<BasicListSportDto[]> {
+    return this.sportService.listBasicList();
   }
 
   @Get()

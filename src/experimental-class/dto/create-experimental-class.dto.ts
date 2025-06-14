@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsEnum, IsDate, IsBoolean, IsOptional } from 'class-validator';
+import { IsString, IsEmail, IsEnum, IsDate, IsBoolean, IsOptional, IsArray, IsUUID } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Gender } from '../../global/enums/gender.enum';
 
@@ -27,6 +27,7 @@ export class CreateExperimentalClassDto {
     @IsOptional()
     graduated_in_style?: string;
 
-    @IsString()
-    sport_id: string;
+    @IsArray()
+    @IsUUID(4, { each: true })
+    sport_ids: string[];
 } 

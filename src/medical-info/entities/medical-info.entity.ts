@@ -5,101 +5,56 @@ import { BaseEntity } from '../../global/entities/base.entity';
 @Entity('medical_info')
 export class MedicalInfo extends BaseEntity {
 
-    @Column({ name: 'pre_existing_condition', length: 10 })
-    preExistingCondition: string;
+    @Column({ name: 'pre_existing_condition', type: 'text', nullable: true })
+    preExistingCondition?: string;
 
-    @Column({ name: 'pre_existing_condition_details', type: 'text', nullable: true })
-    preExistingConditionDetails?: string;
+    @Column({ name: 'serious_injury', type: 'text', nullable: true })
+    seriousInjury?: string;
 
-    @Column({ name: 'serious_injury', length: 10 })
-    seriousInjury: string;
+    @Column({ name: 'medical_restriction', type: 'text', nullable: true })
+    medicalRestriction?: string;
 
-    @Column({ name: 'serious_injury_details', type: 'text', nullable: true })
-    seriousInjuryDetails?: string;
+    @Column({ name: 'heart_condition', type: 'text', nullable: true })
+    heartCondition?: string;
 
-    @Column({ name: 'medical_restriction', length: 10 })
-    medicalRestriction: string;
+    @Column({ name: 'respiratory_issues', type: 'text', nullable: true })
+    respiratoryIssues?: string;
 
-    @Column({ name: 'medical_restriction_details', type: 'text', nullable: true })
-    medicalRestrictionDetails?: string;
+    @Column({ name: 'fainting_episodes', type: 'text', nullable: true })
+    faintingEpisodes?: string;
 
-    @Column({ name: 'heart_condition', length: 10 })
-    heartCondition: string;
+    @Column({ name: 'recent_injury', type: 'text', nullable: true })
+    recentInjury?: string;
 
-    @Column({ name: 'heart_condition_details', type: 'text', nullable: true })
-    heartConditionDetails?: string;
+    @Column({ name: 'joint_problems', type: 'text', nullable: true })
+    jointProblems?: string;
 
-    @Column({ name: 'respiratory_issues', length: 10 })
-    respiratoryIssues: string;
+    @Column({ name: 'prosthetics', type: 'text', nullable: true })
+    prosthetics?: string;
 
-    @Column({ name: 'respiratory_issues_details', type: 'text', nullable: true })
-    respiratoryIssuesDetails?: string;
+    @Column({ name: 'allergies', type: 'text', nullable: true })
+    allergies?: string;
 
-    @Column({ name: 'fainting_episodes', length: 10 })
-    faintingEpisodes: string;
+    @Column({ name: 'continuous_medication', type: 'text', nullable: true })
+    continuousMedication?: string;
 
-    @Column({ name: 'fainting_episodes_details', type: 'text', nullable: true })
-    faintingEpisodesDetails?: string;
+    @Column({ name: 'emergency_medication', type: 'text', nullable: true })
+    emergencyMedication?: string;
 
-    @Column({ name: 'recent_injury', length: 10 })
-    recentInjury: string;
+    @Column({ name: 'seizure_history', type: 'text', nullable: true })
+    seizureHistory?: string;
 
-    @Column({ name: 'recent_injury_details', type: 'text', nullable: true })
-    recentInjuryDetails?: string;
+    @Column({ name: 'major_surgery', type: 'text', nullable: true })
+    majorSurgery?: string;
 
-    @Column({ name: 'joint_problems', length: 10 })
-    jointProblems: string;
+    @Column({ name: 'physical_limitation', type: 'text', nullable: true })
+    physicalLimitation?: string;
 
-    @Column({ name: 'joint_problems_details', type: 'text', nullable: true })
-    jointProblemsDetails?: string;
+    @Column({ name: 'emergency_contact_name', length: 255 })
+    emergencyContactName: string;
 
-    @Column({ name: 'prosthetics', length: 10 })
-    prosthetics: string;
-
-    @Column({ name: 'prosthetics_details', type: 'text', nullable: true })
-    prostheticsDetails?: string;
-
-    @Column({ name: 'allergies', length: 10 })
-    allergies: string;
-
-    @Column({ name: 'allergies_details', type: 'text', nullable: true })
-    allergiesDetails?: string;
-
-    @Column({ name: 'continuous_medication', length: 10 })
-    continuousMedication: string;
-
-    @Column({ name: 'continuous_medication_details', type: 'text', nullable: true })
-    continuousMedicationDetails?: string;
-
-    @Column({ name: 'emergency_medication', length: 10 })
-    emergencyMedication: string;
-
-    @Column({ name: 'emergency_medication_details', type: 'text', nullable: true })
-    emergencyMedicationDetails?: string;
-
-    @Column({ name: 'seizure_history', length: 10 })
-    seizureHistory: string;
-
-    @Column({ name: 'seizure_history_details', type: 'text', nullable: true })
-    seizureHistoryDetails?: string;
-
-    @Column({ name: 'major_surgery', length: 10 })
-    majorSurgery: string;
-
-    @Column({ name: 'major_surgery_details', type: 'text', nullable: true })
-    majorSurgeryDetails?: string;
-
-    @Column({ name: 'physical_limitation', length: 10 })
-    physicalLimitation: string;
-
-    @Column({ name: 'physical_limitation_details', type: 'text', nullable: true })
-    physicalLimitationDetails?: string;
-
-    @Column({ name: 'emergency_name_contact', length: 255 })
-    emergencyNameContact: string;
-
-    @Column({ name: 'emergency_number_contact', length: 30 })
-    emergencyNumberContact: string;
+    @Column({ name: 'emergency_contact_number', length: 30 })
+    emergencyContactNumber: string;
 
     @Column({ name: 'fitness_declaration' })
     fitnessDeclaration: boolean;

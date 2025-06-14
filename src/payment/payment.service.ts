@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Payment } from './entities/payment.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
-import { Registration } from 'src/registration/entities/registration.entity';
-import { SportService } from 'src/sport/sport.service';
+import { Registration } from '../registration/entities/registration.entity';
+import { SportService } from '../sport/sport.service';
 
 @Injectable()
 export class PaymentService {

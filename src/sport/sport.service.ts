@@ -7,6 +7,7 @@ import { In, Repository } from 'typeorm';
 import { daysOfWeekArrayToString } from 'src/global/enums/dayOfWeek.enum';
 import { SportRepository } from './sport.repository';
 import { SportWithStudentsCountDto } from './dto/sport-with-students-count.dto';
+import { BasicListSportDto } from './dto/basic-list-sport.dto';
 
 @Injectable()
 export class SportService {
@@ -16,6 +17,10 @@ export class SportService {
 
   async findAllWithStudentsCount(): Promise<SportWithStudentsCountDto[]> {
     return this.sportRepository.findWithStudentCount();
+  }
+
+  async listBasicList(): Promise<BasicListSportDto[]> {
+    return this.sportRepository.findBasicList();
   }
 
   create(createSportDto: CreateSportDto): Promise<Sport> {

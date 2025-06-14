@@ -13,6 +13,8 @@ import { ApiResponseFactory } from '../utils/api-response.factory';
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
     catch(exception: unknown, host: ArgumentsHost) {
+        console.log("EXCEPTION", exception);
+
         const ctx = host.switchToHttp();
         const response = ctx.getResponse<Response>();
         let status = HttpStatus.INTERNAL_SERVER_ERROR;

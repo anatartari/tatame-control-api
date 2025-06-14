@@ -7,13 +7,13 @@ import { BaseEntity } from '../../global/entities/base.entity';
 @Entity()
 export class Student extends BaseEntity {
 
-    @Column({ length: 255, unique: true })
+    @Column({ length: 255 })
     name: string;
 
     @Column({ length: 255, unique: true })
     email: string;
 
-    @Column({ length: 20, unique: true })
+    @Column({ length: 20 })
     phone: string;
 
     @Column({ length: 50, nullable: true })

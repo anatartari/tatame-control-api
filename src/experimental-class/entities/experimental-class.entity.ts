@@ -4,7 +4,7 @@ import { Sport } from '../../sport/entities/sport.entity';
 import { Student } from '../../student/entities/student.entity';
 import { BaseEntity } from '../../global/entities/base.entity';
 
-@Entity()
+@Entity('experimental_class')
 export class ExperimentalClass extends BaseEntity {
 
     @ManyToOne(() => Sport, { onDelete: 'CASCADE' })

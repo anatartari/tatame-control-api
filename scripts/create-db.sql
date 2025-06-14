@@ -1,56 +1,46 @@
--- Enable UUID extension
+CREATE DATABASE "tatame-control-db"
+
+-- Ativa extensão para UUID
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Tabela Address
+-- Endereços
 CREATE TABLE address (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    street VARCHAR(255) not null,
-    neighborhood VARCHAR(255) not null,
-    cep VARCHAR(20) not null,
+    street VARCHAR(255) NOT NULL,
+    neighborhood VARCHAR(255) NOT NULL,
+    cep VARCHAR(20) NOT NULL,
     city VARCHAR(100),
     state VARCHAR(50),
     number VARCHAR(20),
     complement VARCHAR(100)
 );
 
+-- Informações Médicas
 CREATE TABLE medical_info (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    pre_existing_condition VARCHAR(10) NOT NULL,
-    pre_existing_condition_details TEXT,
-    serious_injury VARCHAR(10) NOT NULL,
-    serious_injury_details TEXT,
-    medical_restriction VARCHAR(10) NOT NULL,
-    medical_restriction_details TEXT,
-    heart_condition VARCHAR(10) NOT NULL,
-    heart_condition_details TEXT,
-    respiratory_issues VARCHAR(10) NOT NULL,
-    respiratory_issues_details TEXT,
-    fainting_episodes VARCHAR(10) NOT NULL,
-    fainting_episodes_details TEXT,
-    recent_injury VARCHAR(10) NOT NULL,
-    recent_injury_details TEXT,
-    joint_problems VARCHAR(10) NOT NULL,
-    joint_problems_details TEXT,
-    prosthetics VARCHAR(10) NOT NULL,
-    prosthetics_details TEXT,
-    allergies VARCHAR(10) NOT NULL,
-    allergies_details TEXT,
-    continuous_medication VARCHAR(10) NOT NULL,
-    continuous_medication_details TEXT,
-    emergency_medication VARCHAR(10) NOT NULL,
-    emergency_medication_details TEXT,
-    seizure_history VARCHAR(10) NOT NULL,
-    seizure_history_details TEXT,
-    major_surgery VARCHAR(10) NOT NULL,
-    major_surgery_details TEXT,
-    physical_limitation VARCHAR(10) NOT NULL,
-    physical_limitation_details TEXT,
-    emergency_name_contact VARCHAR(255) NOT NULL,
-    emergency_number_contact VARCHAR(30) NOT NULL,
+
+    pre_existing_condition TEXT,
+    serious_injury TEXT,
+    medical_restriction TEXT,
+    heart_condition TEXT,
+    respiratory_issues TEXT,
+    fainting_episodes TEXT,
+    recent_injury TEXT,
+    joint_problems TEXT,
+    prosthetics TEXT,
+    allergies TEXT,
+    continuous_medication TEXT,
+    emergency_medication TEXT,
+    seizure_history TEXT,
+    major_surgery TEXT,
+    physical_limitation TEXT,
+
+    emergency_contact_name VARCHAR(255) NOT NULL,
+    emergency_contact_number VARCHAR(30) NOT NULL,
     fitness_declaration BOOLEAN NOT NULL
 );
 
--- Tabela Student
+-- Alunos
 CREATE TABLE student (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
@@ -62,11 +52,11 @@ CREATE TABLE student (
     instagram VARCHAR(255),
     practiced_martial_arts BOOLEAN,
     graduated_in_style VARCHAR(255),
-    address_id UUID REFERENCES address (id) ON DELETE SET NULL,
-    medical_info_id UUID REFERENCES medical_info (id) ON DELETE SET NULL
+    address_id UUID REFERENCES address(id) ON DELETE SET NULL,
+    medical_info_id UUID REFERENCES medical_info(id) ON DELETE SET NULL
 );
 
--- Tabela Sport
+-- Modalidades Esportivas
 CREATE TABLE sport (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(50) NOT NULL,
@@ -74,26 +64,27 @@ CREATE TABLE sport (
     price DECIMAL(10, 2) NOT NULL,
     day_of_week VARCHAR(50) NOT NULL,
     start_time TIME NOT NULL,
-    end_time TIME NOT NULL
+    end_time TIME NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
--- Tabela Experimental Class
+-- Aulas Experimentais
 CREATE TABLE experimental_class (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    sport_id UUID REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
-    student_id UUID REFERENCES student (id) ON DELETE CASCADE NOT NULL
+    sport_id UUID NOT NULL REFERENCES sport(id) ON DELETE CASCADE,
+    student_id UUID NOT NULL REFERENCES student(id) ON DELETE CASCADE
 );
 
--- Tabela Registration
+-- Matrículas
 CREATE TABLE registration (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    student_id UUID REFERENCES student (id) ON DELETE CASCADE NOT NULL,
-    sport_id UUID REFERENCES sport (id) ON DELETE CASCADE NOT NULL,
+    student_id UUID NOT NULL REFERENCES student(id) ON DELETE CASCADE,
+    sport_id UUID NOT NULL REFERENCES sport(id) ON DELETE CASCADE,
     status VARCHAR(50) NOT NULL,
     CONSTRAINT unique_student_sport UNIQUE (student_id, sport_id)
 );
 
--- Tabela Payment
+-- Pagamentos
 CREATE TABLE payment (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     value DECIMAL(10, 2) NOT NULL,
@@ -101,28 +92,28 @@ CREATE TABLE payment (
     reference_month INTEGER NOT NULL
 );
 
--- Tabela Registration Payment (Relacionamento entre registration e payment)
+-- Relacionamento entre pagamento e matrícula
 CREATE TABLE registration_payment (
-    registration_id UUID REFERENCES registration (id) ON DELETE CASCADE NOT NULL,
-    payment_id UUID REFERENCES payment (id) ON DELETE CASCADE NOT NULL,
+    registration_id UUID NOT NULL REFERENCES registration(id) ON DELETE CASCADE,
+    payment_id UUID NOT NULL REFERENCES payment(id) ON DELETE CASCADE,
     CONSTRAINT unique_registration_payment UNIQUE (registration_id, payment_id)
 );
 
--- Tabela Message
+-- Mensagens
 CREATE TABLE message (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     template TEXT NOT NULL
 );
 
--- Tabela Security
+-- Chaves secretas ou tokens
 CREATE TABLE security (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     value TEXT NOT NULL
 );
 
--- Tabela Configuration
+-- Configurações gerais do sistema
 CREATE TABLE configuration (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,

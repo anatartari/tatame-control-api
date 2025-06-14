@@ -3,6 +3,7 @@ import { Student } from '../../student/entities/student.entity';
 import { Sport } from '../../sport/entities/sport.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { BaseEntity } from '../../global/entities/base.entity';
+
 @Entity()
 @Unique(['student', 'sport'])
 export class Registration extends BaseEntity {
@@ -17,6 +18,16 @@ export class Registration extends BaseEntity {
     status: string;
 
     @ManyToMany(() => Payment, (payment) => payment.registrations)
-    @JoinTable()
+    @JoinTable({
+        name: 'registration_payment',
+        joinColumn: {
+            name: 'registration_id',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'payment_id',
+            referencedColumnName: 'id'
+        }
+    })
     payments: Payment[]
 }

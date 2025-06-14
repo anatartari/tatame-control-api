@@ -23,6 +23,9 @@ export class Sport extends BaseEntity {
     @Column({ name: "end_time", type: 'time', nullable: false })
     endTime: string;
 
+    @Column({ name: "active", type: 'boolean', nullable: false, default: true })
+    active: boolean;
+
     @OneToMany(() => ExperimentalClass, (expClass) => expClass.sport)
     experimentalClasses: ExperimentalClass[];
 
