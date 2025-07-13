@@ -3,6 +3,7 @@ import { Student } from '../../student/entities/student.entity';
 import { Sport } from '../../sport/entities/sport.entity';
 import { Payment } from 'src/payment/entities/payment.entity';
 import { BaseEntity } from '../../global/entities/base.entity';
+import { RegistrationStatusEnum } from '../../global/enums/registration-status.enum';
 
 @Entity()
 @Unique(['student', 'sport'])
@@ -14,8 +15,13 @@ export class Registration extends BaseEntity {
     @ManyToOne(() => Sport, { onDelete: 'CASCADE' })
     sport: Sport;
 
-    @Column({ length: 50 })
-    status: string;
+    @Column({ 
+        type: 'varchar', 
+        length: 50,
+        enum: RegistrationStatusEnum,
+        default: RegistrationStatusEnum.ACTIVE
+    })
+    status: RegistrationStatusEnum;
 
     @ManyToMany(() => Payment, (payment) => payment.registrations)
     @JoinTable({
