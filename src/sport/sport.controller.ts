@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { SportService } from './sport.service';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
-import { Sport } from './entities/sport.entity';
+import { SportDto } from './dto/sport.dto';
 import { SportWithStudentsCountDto } from './dto/sport-with-students-count.dto';
 import { BasicListSportDto } from './dto/basic-list-sport.dto';
 
@@ -11,7 +11,7 @@ export class SportController {
   constructor(private readonly sportService: SportService) { }
 
   @Post()
-  create(@Body() createSportDto: CreateSportDto): Promise<Sport> {
+  create(@Body() createSportDto: CreateSportDto): Promise<SportDto> {
     return this.sportService.create(createSportDto);
   }
 
@@ -26,17 +26,17 @@ export class SportController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<SportDto[]> {
     return this.sportService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<SportDto | null> {
     return this.sportService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSportDto: UpdateSportDto) {
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateSportDto: UpdateSportDto): Promise<SportDto> {
     return this.sportService.update(id, updateSportDto);
   }
 

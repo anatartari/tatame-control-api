@@ -38,7 +38,7 @@ export class SportRepository extends Repository<Sport> {
                 'sport.start_time',
                 'sport.end_time',
             ])
-            .addSelect('COUNT(registration.id)', 'students_count')
+            .addSelect('COUNT(registration.id)', 'studentsCount')
             .groupBy('sport.id')
             .getRawMany()
             .then(this.mapRawResults);
@@ -46,14 +46,14 @@ export class SportRepository extends Repository<Sport> {
 
     private mapRawResults(rawResults: any[]): SportWithStudentsCountDto[] {
         return rawResults.map(raw => ({
-            id: raw.id,
-            name: raw.name,
-            sensei: raw.sensei,
-            day_of_week: daysOfWeekStringToArray(raw.day_of_week),  
-            start_time: raw.start_time,
-            end_time: raw.end_time,
-            price: raw.price,
-            students_count: parseInt(raw.students_count, 10),
+            id: raw.sport_id,
+            name: raw.sport_name,
+            sensei: raw.sport_sensei,
+            dayOfWeek: daysOfWeekStringToArray(raw.day_of_week),  
+            startTime: raw.start_time,
+            endTime: raw.end_time,
+            price: raw.sport_price,
+            studentsCount: parseInt(raw.studentsCount, 10),
         }));
     
     }
@@ -62,9 +62,9 @@ export class SportRepository extends Repository<Sport> {
         return rawResults.map(raw => ({
             id: raw.sport_id,
             name: raw.sport_name,
-            day_of_week: daysOfWeekStringToArray(raw.day_of_week),
-            start_time: raw.start_time,
-            end_time: raw.end_time,
+            dayOfWeek: daysOfWeekStringToArray(raw.day_of_week),
+            startTime: raw.start_time,
+            endTime: raw.end_time,
         }));
     }
 }

@@ -1,10 +1,10 @@
 export class SportWithStudentsCountDto {
-    id: number;
+    id: string;
     name: string;
     sensei: string;
     price: number;
-    day_of_week: string[];
-    start_time: string;
-    end_time: string;
-    students_count: number;
+    dayOfWeek: string[];
+    startTime: string;
+    endTime: string;
+    studentsCount: number;
 }

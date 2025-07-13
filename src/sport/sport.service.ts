@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSportDto } from './dto/create-sport.dto';
 import { UpdateSportDto } from './dto/update-sport.dto';
+import { SportDto } from './dto/sport.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sport } from './entities/sport.entity';
 import { In, Repository } from 'typeorm';
@@ -23,23 +24,26 @@ export class SportService {
     return this.sportRepository.findBasicList();
   }
 
-  create(createSportDto: CreateSportDto): Promise<Sport> {
+  async create(createSportDto: CreateSportDto): Promise<SportDto> {
     const sport = this.sportRepository.create({
       ...createSportDto,
       dayOfWeek: daysOfWeekArrayToString(createSportDto.dayOfWeek),
     });
-    return this.sportRepository.save(sport);
+    const savedSport = await this.sportRepository.save(sport);
+    return SportDto.convertToDto(savedSport);
   }
 
-  async findAll(): Promise<Sport[]> {
-    return this.sportRepository.find();
+  async findAll(): Promise<SportDto[]> {
+    const sports = await this.sportRepository.find();
+    return sports.map(sport => SportDto.convertToDto(sport));
   }
 
-  async findOne(id: string): Promise<Sport | null> {
-    return this.sportRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<SportDto | null> {
+    const sport = await this.sportRepository.findOne({ where: { id } });
+    return sport ? SportDto.convertToDto(sport) : null;
   }
 
-  async update(id: string, updateSportDto: UpdateSportDto): Promise<Sport> {
+  async update(id: string, updateSportDto: UpdateSportDto): Promise<SportDto> {
     const updateData = {
       ...updateSportDto,
       dayOfWeek: Array.isArray(updateSportDto.dayOfWeek)
@@ -47,7 +51,8 @@ export class SportService {
         : updateSportDto.dayOfWeek,
     };
     await this.sportRepository.update(id, updateData);
-    return this.sportRepository.findOne({ where: { id } }) as Promise<Sport>;
+    const updatedSport = await this.sportRepository.findOne({ where: { id } }) as Sport;
+    return SportDto.convertToDto(updatedSport);
   }
 
   async remove(id: string): Promise<void> {
