@@ -7,7 +7,6 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { SportModule } from './sport/sport.module';
 import { DataSource } from 'typeorm';
 import { StudentModule } from './student/student.module';
-import { ExperimentalClassModule } from './experimental-class/experimental-class.module';
 
 
 @Module({
@@ -23,7 +22,6 @@ import { ExperimentalClassModule } from './experimental-class/experimental-class
     }),
     SportModule,
     StudentModule,
-    ExperimentalClassModule,
   ],
   controllers: [AppController],
   providers: [AppService],

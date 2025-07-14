@@ -1,4 +1,3 @@
-import { ExperimentalClass } from "src/experimental-class/entities/experimental-class.entity";
 import { Registration } from "src/registration/entities/registration.entity";
 import { Column, Entity, OneToMany } from "typeorm";
 import { BaseEntity } from "../../global/entities/base.entity";
@@ -25,9 +24,6 @@ export class Sport extends BaseEntity {
 
     @Column({ name: "active", type: 'boolean', nullable: false, default: true })
     active: boolean;
-
-    @OneToMany(() => ExperimentalClass, (expClass) => expClass.sport)
-    experimentalClasses: ExperimentalClass[];
 
     @OneToMany(() => Registration, registration => registration.sport)
     registrations: Registration[];

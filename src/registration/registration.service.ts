@@ -8,7 +8,7 @@ import { Address } from '../address/entities/address.entity';
 import { MedicalInfo } from '../medical-info/entities/medical-info.entity';
 import { CreateRegistrationDto } from './dto/create-registration.dto';
 
-import { RegistrationStatusEnum, isValidRegistrationStatus } from '../global/enums/registration-status.enum';
+import { RegistrationStatusEnum } from '../global/enums/registration-status.enum';
 import { CreateExperimentalClassDto } from './dto/create-experimental-class.dto';
 
 @Injectable()
