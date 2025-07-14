@@ -1,9 +1,15 @@
-import { CreateStudentDto } from 'src/student/dto/create-student.dto';
+import { IsArray, IsUUID, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateStudentDto } from '../../student/dto/create-student.dto';
 
 export class CreateRegistrationDto {
     
-    student : CreateStudentDto;
+    @ValidateNested()
+    @Type(() => CreateStudentDto)
+    student: CreateStudentDto;
 
-    sportIds : string[];
+    @IsArray()
+    @IsUUID('4', { each: true })
+    sportIds: string[];
     
 }

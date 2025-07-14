@@ -13,8 +13,9 @@ export class RegistrationController {
     return this.registrationService.createRegistration(createRegistrationDto);
   }
 
-  @Post()
+  @Post('/experimental-class')
     async createExperimentalClass(@Body() createDto: CreateExperimentalClassDto): Promise<Registration[]> {
+      console.log(createDto);
         return this.registrationService.createExperimentalClass(createDto);
     }
 

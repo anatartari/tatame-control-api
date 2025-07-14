@@ -7,7 +7,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { SportModule } from './sport/sport.module';
 import { DataSource } from 'typeorm';
 import { StudentModule } from './student/student.module';
-
+import { RegistrationModule } from './registration/registration.module';
 
 @Module({
   imports: [
@@ -22,6 +22,7 @@ import { StudentModule } from './student/student.module';
     }),
     SportModule,
     StudentModule,
+    RegistrationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

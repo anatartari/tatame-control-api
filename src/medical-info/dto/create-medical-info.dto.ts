@@ -1,60 +1,75 @@
 import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreateMedicalInfoDto {
+  @IsOptional()
   @IsString()
-  preExistingCondition: string;
+  preExistingCondition?: string;
 
   @IsOptional()
   @IsString()
   preExistingConditionDetails?: string;
 
+  @IsOptional()
   @IsString()
-  seriousInjury: string;
+  seriousInjury?: string;
+
+  @IsOptional()
+  @IsString()
+  medicalRestriction?: string;
+
+  @IsOptional()
+  @IsString()
+  heartCondition?: string;
+
+  @IsOptional()
+  @IsString()
+  respiratoryIssues?: string;
+
+  @IsOptional()
+  @IsString()
+  faintingEpisodes?: string;
+
+  @IsOptional()
+  @IsString()
+  recentInjury?: string;
+
+  @IsOptional()
+  @IsString()
+  jointProblems?: string;
+
+  @IsOptional()
+  @IsString()
+  prosthetics?: string;
+
+  @IsOptional()
+  @IsString()
+  allergies?: string;
+
+  @IsOptional()
+  @IsString()
+  continuousMedication?: string;
+
+  @IsOptional()
+  @IsString()
+  emergencyMedication?: string;
+
+  @IsOptional()
+  @IsString()
+  seizureHistory?: string;
+  
+  @IsOptional()
+  @IsString()
+  majorSurgery?: string;
+
+  @IsOptional()
+  @IsString()
+  physicalLimitation?: string;
 
   @IsString()
-  medicalRestriction: string;
+  emergencyContactName: string;
 
   @IsString()
-  heartCondition: string;
-
-  @IsString()
-  respiratoryIssues: string;
-
-  @IsString()
-  faintingEpisodes: string;
-
-  @IsString()
-  recentInjury: string;
-
-  @IsString()
-  jointProblems: string;
-
-  @IsString()
-  prosthetics: string;
-
-  @IsString()
-  allergies: string;
-
-  @IsString()
-  continuousMedication: string;
-
-  @IsString()
-  emergencyMedication: string;
-
-  @IsString()
-  seizureHistory: string;
-
-  @IsString()
-  majorSurgery: string;
-
-  @IsString()
-  physicalLimitation: string;
-
-  @IsString()
-  emergencyNameContact: string;
-
-  @IsString()
-  emergencyNumberContact: string;
+  emergencyContactNumber: string;
 
   @IsBoolean()
   fitnessDeclaration: boolean;

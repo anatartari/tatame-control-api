@@ -54,7 +54,4 @@ export class CreateStudentDto {
   @Type(() => CreateMedicalInfoDto)
   medicalInfo: CreateMedicalInfoDto;
 
-  @IsArray()
-  @IsUUID('4', { each: true })
-  sportIds: string[];
 } 
