@@ -20,5 +20,6 @@ import { MedicalInfo } from '../medical-info/entities/medical-info.entity';
   ],
   providers: [RegistrationService],
   controllers: [RegistrationController],
+  exports: [RegistrationService],
 })
 export class RegistrationModule {}

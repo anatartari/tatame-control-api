@@ -8,6 +8,7 @@ import { SportModule } from './sport/sport.module';
 import { DataSource } from 'typeorm';
 import { StudentModule } from './student/student.module';
 import { RegistrationModule } from './registration/registration.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { RegistrationModule } from './registration/registration.module';
     SportModule,
     StudentModule,
     RegistrationModule,
+    PaymentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

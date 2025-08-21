@@ -1,9 +1,6 @@
 import { IsArray, IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreatePaymentDto {
-    @IsNotEmpty()
-    @IsNumber()
-    value: number;
 
     @IsNotEmpty()
     @IsDate()
