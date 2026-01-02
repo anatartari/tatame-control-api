@@ -4,9 +4,7 @@ import {
   IsOptional, 
   IsBoolean, 
   IsDate, 
-  IsArray, 
   ValidateNested,
-  IsUUID 
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateAddressDto } from 'src/address/dto/create-address.dto';

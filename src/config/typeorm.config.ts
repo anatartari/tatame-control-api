@@ -9,6 +9,9 @@ export const typeOrmConfig = (configService: ConfigService): TypeOrmModuleOption
     password: configService.get<string>('DB_PASSWORD', 'password'),
     database: configService.get<string>('DB_NAME', 'dbname'),
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    migrations: [__dirname + '/../migrations/*{.ts,.js}'],
     synchronize: configService.get<string>('NODE_ENV', 'development') !== 'production',
     logging: configService.get<boolean>('DB_LOGGING', true),
+    migrationsRun: false,
+    migrationsTableName: 'migrations',
 });

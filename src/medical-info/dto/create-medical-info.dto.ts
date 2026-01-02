@@ -1,13 +1,9 @@
-import { IsString, IsOptional, IsBoolean } from 'class-validator';
+import { IsString, IsOptional, IsBoolean, IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreateMedicalInfoDto {
   @IsOptional()
   @IsString()
   preExistingCondition?: string;
-
-  @IsOptional()
-  @IsString()
-  preExistingConditionDetails?: string;
 
   @IsOptional()
   @IsString()
@@ -65,10 +61,14 @@ export class CreateMedicalInfoDto {
   @IsString()
   physicalLimitation?: string;
 
+  @IsNotEmpty()
   @IsString()
+  @MaxLength(255)
   emergencyContactName: string;
 
+  @IsNotEmpty()
   @IsString()
+  @MaxLength(30)
   emergencyContactNumber: string;
 
   @IsBoolean()
