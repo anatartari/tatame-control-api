@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-import { BeforeInsert, EventSubscriber, EntitySubscriberInterface } from 'typeorm';
 
 export function GenerateUUID() {
     return function (target: any, propertyKey: string) {

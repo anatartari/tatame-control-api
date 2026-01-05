@@ -8,11 +8,11 @@ export class CreatePaymentDto {
 
     @IsNotEmpty()
     @IsNumber()
-    reference_month: number;
+    referenceMonth: number;
 
     @IsNotEmpty()
     @IsArray()
     @IsString({ each: true })
-    registration_ids: string[];
+    registrationIds: string[];
 }
 

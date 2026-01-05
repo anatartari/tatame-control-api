@@ -1,4 +1,4 @@
-import { RegistrationStatusEnum } from '../../global/enums/registration-status.enum';
+import { RegistrationStatusEnum } from '../../global/enums/registrationStatus.enum';
 
 export class StudentsWithRegistrationStatusDto {
     id: string;

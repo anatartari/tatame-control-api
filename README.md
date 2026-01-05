@@ -1,98 +1,189 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Tatame Control API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Tatame Control API is a **NestJS** backend built with **Ports and Adapters (Hexagonal Architecture)** to manage martial arts school operations such as sports, students, registrations, and payments.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+The focus is on clean boundaries, testable business logic, and independence from frameworks and infrastructure.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Architecture Overview
 
-## Project setup
+This project follows **Hexagonal Architecture**, separating responsibilities into well-defined layers:
 
-```bash
-$ yarn install
+* **Domain**: Core business entities
+* **Application**: Use cases (business rules)
+* **Ports**: Interfaces that define contracts
+* **Adapters**: Web and persistence implementations
+* **Infrastructure**: Database and external configuration
+
+---
+
+## Project Structure
+
+```
+src/
+├── infrastructure/
+│   └── database/
+│       ├── config/
+│       └── migrations/
+│
+├── global/
+│   ├── entities/
+│   ├── enums/
+│   ├── filters/
+│   ├── interceptors/
+│   ├── ports/
+│   └── utils/
+│
+├── [feature]/
+│   ├── domain/
+│   │   └── entities/
+│   ├── ports/
+│   │   ├── repositories/
+│   │   └── use-cases/
+│   ├── adapters/
+│   │   ├── persistence/
+│   │   └── web/
+│   ├── application/
+│   │   └── use-cases/
+│   ├── dto/
+│   └── [feature].module.ts
+│
+├── app.module.ts
+└── main.ts
 ```
 
-## Compile and run the project
+Each feature (e.g. `student`, `sport`) is isolated and follows the same internal structure.
 
-```bash
-# development
-$ yarn run start
+---
 
-# watch mode
-$ yarn run start:dev
+## Ports and Adapters
 
-# production mode
-$ yarn run start:prod
+### Ports
+
+* **Repository Ports** define data access contracts
+* **Use Case Ports** define application operations
+
+### Adapters
+
+* **Web Adapters** expose HTTP endpoints (NestJS controllers)
+* **Persistence Adapters** implement repository ports using TypeORM
+
+### Dependency Flow
+
+```
+Adapters → Application → Ports → Domain
+                ↑
+         Infrastructure
 ```
 
-## Run tests
+The domain layer has no dependency on frameworks or databases.
 
-```bash
-# unit tests
-$ yarn run test
+**Applications** (`application/use-cases/`)
+- Contains **business logic** and use cases that orchestrate domain operations
+- Framework-agnostic: doesn't know about HTTP, databases, or external services
+- Implements use case interfaces defined in `ports/use-cases/`
+- Handles business rules, validations, transactions, and domain coordination
+- Example: `CreateRegistrationUseCase` - orchestrates student creation, address and medical info persistence, and registration creation with proper transaction handling
 
-# e2e tests
-$ yarn run test:e2e
+**Adapters** (`adapters/`)
+- **Concrete implementations** that connect the application to the external world
+- Adapts specific technologies (HTTP, TypeORM, etc.) to the interfaces defined in `ports/`
+- Two main types:
+  - **Web Adapters** (`adapters/web/`): NestJS controllers that receive HTTP requests and call use cases
+  - **Persistence Adapters** (`adapters/persistence/`): Repository implementations using TypeORM that implement repository ports
 
-# test coverage
-$ yarn run test:cov
+**Key Principle**: The `application` layer never depends on `adapters`. Adapters depend on ports (interfaces) and call application use cases.
+
+**Domain** (`domain/entities/`)
+- Contains **core business entities** that represent the fundamental concepts of the domain
+- Pure domain models with business properties and relationships
+- Framework-independent: entities may use TypeORM decorators for persistence, but the domain logic is separate
+- Defines the vocabulary and structure of the business domain
+- Example: `Registration` entity - represents a student's enrollment in a sport with status, relationships to Student, Sport, and Payment entities
+
+**Ports** (`ports/`)
+- **Interfaces (contracts)** that define how different layers communicate
+- Two main types:
+  - **Repository Ports** (`ports/repositories/`): Define data access contracts (e.g., `IRegistrationRepository`) that specify what operations can be performed on domain entities
+  - **Use Case Ports** (`ports/use-cases/`): Define application operation contracts (e.g., `ICreateRegistrationUseCase`) that specify what business operations are available
+- Enable dependency inversion: high-level modules depend on abstractions, not concrete implementations
+- Example: `IRegistrationRepository` interface defines methods like `find()`, `save()`, `findWithPayments()` without specifying how they're implemented
+
+**Infrastructure** (`infrastructure/`)
+- Contains **technical configuration** and external system integrations
+- Database configuration, connection settings, and migration files
+- Framework-specific setup (TypeORM configuration, NestJS module configuration)
+- Provides the technical foundation that the application layer uses indirectly through adapters
+- Example: `typeorm.config.ts` - configures database connection, entity paths, and migration settings
+
+---
+
+## TypeORM Integration
+
+* Database configuration and migrations live in `infrastructure/database`
+* Persistence adapters implement repository ports while extending TypeORM repositories
+
+Example:
+
+```ts
+@Injectable()
+export class FeatureRepositoryAdapter
+  implements IFeatureRepository {
+
+  constructor(
+    @InjectRepository(Feature)
+    private readonly repository: Repository<Feature>,
+  ) {}
+}
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Dependency Injection
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Ports are injected using **Symbol tokens** to enforce decoupling:
 
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
+```ts
+export const FEATURE_REPOSITORY = Symbol('FEATURE_REPOSITORY');
+
+providers: [
+  { 
+    provide: FEATURE_REPOSITORY, 
+    useClass: FeatureRepositoryAdapter 
+  }
+];
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Use cases depend only on interfaces, never on concrete implementations.
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## Environment Configuration
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Environment files:
 
-## Support
+* `.env.development`
+* `.env.production`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Main variables:
 
-## Stay in touch
+* `DB_HOST`
+* `DB_PORT`
+* `DB_USERNAME`
+* `DB_PASSWORD`
+* `DB_NAME`
+* `NODE_ENV`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## API Documentation
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Swagger documentation is available at:
+
+```
+/api
+```
+
+(Development mode only)
+

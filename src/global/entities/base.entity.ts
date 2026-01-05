@@ -6,14 +6,14 @@ export abstract class BaseEntity {
     id: string;
 
     @CreateDateColumn({ 
-        name: 'created_at',
+        name: 'createdAt',
         type: 'timestamp with time zone',
         default: () => 'CURRENT_TIMESTAMP'
     })
     createdAt: Date;
 
     @UpdateDateColumn({ 
-        name: 'updated_at',
+        name: 'updatedAt',
         type: 'timestamp with time zone',
         default: () => 'CURRENT_TIMESTAMP'
     })
