@@ -1,5 +1,5 @@
 import { DayOfWeekEnum, daysOfWeekStringToArray } from "src/global/enums/dayOfWeek.enum";
-import { Sport } from "../entities/sport.entity";
+import { Sport } from "../domain/entities/sport.entity";
 
 export class SportDto {
     id: string;

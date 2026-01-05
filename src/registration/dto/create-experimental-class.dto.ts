@@ -21,13 +21,13 @@ export class CreateExperimentalClassDto {
     birthday: Date;
 
     @IsBoolean()
-    practiced_martial_arts: boolean;
+    practicedMartialArts: boolean;
 
     @IsString()
     @IsOptional()
-    graduated_in_style?: string;
+    graduatedInStyle?: string;
 
     @IsArray()
     @IsUUID(4, { each: true })
-    sport_ids: string[];
+    sportIds: string[];
 } 

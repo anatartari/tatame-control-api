@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RegistrationService } from './registration.service';
-import { RegistrationController } from './registration.controller';
-import { Registration } from './entities/registration.entity';
-import { Student } from '../student/entities/student.entity';
-import { Sport } from '../sport/entities/sport.entity';
-import { Address } from '../address/entities/address.entity';
-import { MedicalInfo } from '../medical-info/entities/medical-info.entity';
+import { Registration } from './domain/entities/registration.entity';
+import { Student } from '../student/domain/entities/student.entity';
+import { Sport } from '../sport/domain/entities/sport.entity';
+import { Address } from '../address/domain/entities/address.entity';
+import { MedicalInfo } from '../medical-info/domain/entities/medical-info.entity';
+import { RegistrationController } from './adapters/web/registration.controller';
+import { RegistrationRepositoryAdapter } from './adapters/persistence/registration.repository.adapter';
+import { REGISTRATION_REPOSITORY } from './ports/repositories/registration.repository.port';
+import { CreateRegistrationUseCase } from './application/use-cases/create-registration.use-case';
+import { CreateExperimentalClassUseCase } from './application/use-cases/create-experimental-class.use-case';
+import { UpdateRegistrationStatusUseCase } from './application/use-cases/update-registration-status.use-case';
+import { UPDATE_REGISTRATION_STATUS_USE_CASE } from './ports/use-cases/update-registration-status.use-case.port';
+import { FindRegistrationUseCase } from './application/use-cases/find-registration.use-case';
+import { ListRegistrationsUseCase } from './application/use-cases/list-registrations.use-case';
 
 @Module({
   imports: [
@@ -18,8 +25,24 @@ import { MedicalInfo } from '../medical-info/entities/medical-info.entity';
       MedicalInfo,
     ]),
   ],
-  providers: [RegistrationService],
   controllers: [RegistrationController],
-  exports: [RegistrationService],
+  providers: [
+    CreateRegistrationUseCase,
+    CreateExperimentalClassUseCase,
+    FindRegistrationUseCase,
+    ListRegistrationsUseCase,
+    { 
+      provide: UPDATE_REGISTRATION_STATUS_USE_CASE, 
+      useClass: UpdateRegistrationStatusUseCase 
+    },
+    {
+      provide: REGISTRATION_REPOSITORY,
+      useClass: RegistrationRepositoryAdapter,
+    },
+  ],
+  exports: [
+    REGISTRATION_REPOSITORY, 
+    UPDATE_REGISTRATION_STATUS_USE_CASE,
+  ],
 })
 export class RegistrationModule {}

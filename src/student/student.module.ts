@@ -1,16 +1,21 @@
 import { Module } from '@nestjs/common';
-import { StudentService } from './student.service';
-import { StudentController } from './student.controller';
-import { StudentRepository } from './student.repository';
-import { DataSource } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Student } from './domain/entities/student.entity';
+import { StudentController } from './adapters/web/student.controller';
+import { StudentRepositoryAdapter } from './adapters/persistence/student.repository.adapter';
+import { STUDENT_REPOSITORY } from './ports/repositories/student.repository.port';
+import { ListWithRegistrationStatusUseCase } from './application/use-cases/list-with-registration-status.use-case';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Student])],
   controllers: [StudentController],
-  providers: [StudentService,
+  providers: [
+    ListWithRegistrationStatusUseCase,
     {
-      provide: StudentRepository,
-      useFactory: (dataSource: DataSource) => new StudentRepository(dataSource),
-      inject: [DataSource],
-    }],
+      provide: STUDENT_REPOSITORY,
+      useClass: StudentRepositoryAdapter,
+    },
+  ],
+  exports: [STUDENT_REPOSITORY],
 })
 export class StudentModule {}
