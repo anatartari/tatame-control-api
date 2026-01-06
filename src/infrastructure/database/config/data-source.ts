@@ -9,6 +9,7 @@ import { MedicalInfo } from '../../../medical-info/domain/entities/medical-info.
 import { Sport } from '../../../sport/domain/entities/sport.entity';
 import { Registration } from '../../../registration/domain/entities/registration.entity';
 import { Payment } from '../../../payment/domain/entities/payment.entity';
+import { User } from '../../../auth/domain/entities/user.entity';
 
 // Load environment variables based on NODE_ENV
 const envFile = `.env.${process.env.NODE_ENV || 'development'}`;
@@ -28,6 +29,7 @@ export const dataSourceOptions: DataSourceOptions = {
     Sport,
     Registration,
     Payment,
+    User,
   ],
   migrations: [join(__dirname, '../migrations/*.{ts,js}')],
   synchronize: false, // Always false when using migrations
